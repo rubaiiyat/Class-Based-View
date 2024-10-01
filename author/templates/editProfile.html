@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
+  <form method="POST" class="max-w-md mx-auto mt-5 bg-gray-800 p-5 rounded-lg">
+    {% csrf_token %}
+    <!-- {{ form|crispy }} -->
+    {% for fm in form %}
+      {{ fm.label_tag }} {{ fm }} {{ fm.errors }}
+    {% endfor %}
+    <button class="btn join-item bg-gray-950 hover:text-green-500 mt-2">Update</button>
+  </form>
+{% endblock %}
