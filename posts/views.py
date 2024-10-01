@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from .forms import postForm
 from . import models
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
 # Create your views here.
@@ -48,6 +48,14 @@ def editPost(request, id):
             return redirect("profile")
 
     return render(request, "post.html", {"form": post_Form, "page": page})
+
+
+class editPostView(UpdateView):
+    model = models.Posts
+    form_class = postForm
+    template_name = "post.html"
+    pk_url_kwarg = "id"
+    success_url = reverse_lazy("profile")
 
 
 def deletePost(request, id):
