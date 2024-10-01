@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from .forms import postForm
 from . import models
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import CreateView
 
 
 # Create your views here.
@@ -18,6 +20,17 @@ def post(request):
     else:
         post_Form = postForm()
     return render(request, "post.html", {"form": post_Form, "page": page})
+
+
+class addPostCreateView(CreateView):
+    model = models.Posts
+    form_class = postForm
+    template_name = "post.html"
+    success_url = reverse_lazy("posts")
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 def editPost(request, id):
