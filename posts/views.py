@@ -64,3 +64,10 @@ def deletePost(request, id):
         return redirect("home")
     posts.delete()
     return redirect("home")
+
+
+class deletePostView(DeleteView):
+    model = models.Posts
+    template_name = "delete.html"
+    pk_url_kwarg = "id"
+    success_url = reverse_lazy("profile")

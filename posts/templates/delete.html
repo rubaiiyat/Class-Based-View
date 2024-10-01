@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <form method="POST" class="max-w-md mx-auto mt-5 bg-gray-800 p-5 rounded-lg">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <h1>Are Your Sure To Delete This?</h1>
+    <button class="btn join-item bg-red-500 hover:bg-red-600 bg text-white">Delete</button>
+  </form>
+{% endblock %}
