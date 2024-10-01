@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from . import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -6,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from posts.models import Posts
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 def Register(request):
@@ -49,6 +51,26 @@ def userLogin(request):
         else:
             userForm = AuthenticationForm()
         return render(request, "login.html", {"form": userForm, "page": page})
+
+
+class userLoginView(LoginView):
+    template_name = "register.html"
+
+    def get_success_url(self) -> str:
+        return reverse_lazy("profile")
+
+    def form_valid(self, form):
+        messages.success(self.request, "Logged In Successfully")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.warning(self.request, "Invalid Username or Password")
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page"] = "login"
+        return context
 
 
 @login_required

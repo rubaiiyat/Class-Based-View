@@ -4,6 +4,7 @@ from .forms import postForm
 from . import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -22,6 +23,7 @@ def post(request):
     return render(request, "post.html", {"form": post_Form, "page": page})
 
 
+@method_decorator(login_required, name="dispatch")
 class addPostCreateView(CreateView):
     model = models.Posts
     form_class = postForm
@@ -50,6 +52,7 @@ def editPost(request, id):
     return render(request, "post.html", {"form": post_Form, "page": page})
 
 
+@method_decorator(login_required, name="dispatch")
 class editPostView(UpdateView):
     model = models.Posts
     form_class = postForm
@@ -66,6 +69,7 @@ def deletePost(request, id):
     return redirect("home")
 
 
+@method_decorator(login_required, name="dispatch")
 class deletePostView(DeleteView):
     model = models.Posts
     template_name = "delete.html"
