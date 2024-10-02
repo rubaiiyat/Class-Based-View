@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="flex flex-row w-8/12 justify-center mx-auto items-center bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 dark:bg-gray-800 p-5 mt-5">
+    <img class="object-cover rounded-t-lg h-96 md:h-auto md:w-96 md:rounded-none md:rounded-s-lg" src="{{ posts.image.url }}" alt="" />
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ posts.title }}1</h5>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ posts.content }}</p>
+
+      <div class="flex mt-10">
+        Category:{% for cat in posts.category.all %}
+          <h1 class="text-cyan-500">{{ cat }},</h1>
+        {% endfor %}
+      </div>
+      <div>
+        <small>Author: <a class="text-cyan-500 underline" href="{% url 'view_profile' posts.author %}">{{ posts.author.first_name }} {{ posts.author.last_name }}</a></small>
+      </div>
+    </div>
+  </div>
+{% endblock %}

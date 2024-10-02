@@ -4,6 +4,7 @@ from .forms import postForm
 from . import models
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 
 
@@ -75,3 +76,9 @@ class deletePostView(DeleteView):
     template_name = "delete.html"
     pk_url_kwarg = "id"
     success_url = reverse_lazy("profile")
+
+
+class detailPostView(DetailView):
+    model = models.Posts
+    pk_url_kwarg = "id"
+    template_name = "postDetails.html"

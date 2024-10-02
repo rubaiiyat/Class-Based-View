@@ -8,4 +8,5 @@ urlpatterns = [
     path("edit/<int:id>/", views.editPostView.as_view(), name="edit"),
     # path("delete/<int:id>/", views.deletePost, name="delete"),
     path("delete/<int:id>/", views.deletePostView.as_view(), name="delete"),
+    path("details/<int:id>/", views.detailPostView.as_view(), name="details"),
 ]
