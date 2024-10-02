@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
   <div class="flex flex-row w-8/12 justify-center mx-auto items-center bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 dark:bg-gray-800 p-5 mt-5">
     <img class="object-cover rounded-t-lg h-96 md:h-auto md:w-96 md:rounded-none md:rounded-s-lg" src="{{ posts.image.url }}" alt="" />
@@ -16,5 +16,30 @@
         <small>Author: <a class="text-cyan-500 underline" href="{% url 'view_profile' posts.author %}">{{ posts.author.first_name }} {{ posts.author.last_name }}</a></small>
       </div>
     </div>
+  </div>
+
+  <!-- Comments Section -->
+
+  <!-- Comment Form -->
+  <form method="POST" class="w-8/12 mt-5 bg-gray-800 p-5 rounded-lg flex flex-col justify-center mx-auto items-center">
+    {% csrf_token %}
+    <!-- {{ form|crispy }} -->
+    {% for fm in comment_form %}
+      {{ fm }}
+      {{ fm.errors }}
+    {% endfor %}
+    <button class="btn join-item bg-gray-950 hover:text-green-500 mt-2">Post Comment</button>
+  </form>
+  <div class="mt-10 w-8/12 bg-gray-800 p-5 rounded-lg flex flex-col justify-center text-start mx-auto items-start">
+    <h3 class="text-xl font-bold mb-4">Total Comments: {{ total_comments }}</h3>
+    <h3 class="text-xl font-bold mb-4">Comments</h3>
+    {% if comments %}
+      {% for comment in comments %}
+        <div class="p-4 mb-4 rounded-lg">
+          <strong class="text-blue-500"><a href="{% url 'view_profile' comment.author.username %}">{{ comment.author.first_name }} {{ comment.author.last_name }}</a></strong>
+          <p>{{ comment.content }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
 {% endblock %}
